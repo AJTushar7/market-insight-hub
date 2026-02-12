@@ -1,0 +1,202 @@
+<footer class="footer">
+  <!-- Newsletter Section -->
+  <div class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-content">
+        <div class="newsletter-text">
+          <h3>Stay Updated with Market Insights</h3>
+          <p>Get free stock tips, market analysis, and educational content delivered to your inbox.</p>
+        </div>
+        <form class="newsletter-form" (submit)="$event.preventDefault()">
+          <input 
+            type="email" 
+            placeholder="Enter your email" 
+            required
+          />
+          <button type="submit" class="btn-subscribe">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Footer -->
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a routerLink="/" class="footer-logo">
+            <div class="logo-icon">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="18" fill="url(#footerLogoGradient)" />
+                <path d="M12 25L18 18L24 22L30 14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="30" cy="14" r="2.5" fill="white"/>
+                <defs>
+                  <linearGradient id="footerLogoGradient" x1="0" y1="0" x2="40" y2="40">
+                    <stop stop-color="#00BFA6"/>
+                    <stop offset="1" stop-color="#00796B"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="logo-text">
+              <span class="logo-name">Rising Stock</span>
+              <span class="logo-tagline">of India</span>
+            </div>
+          </a>
+          <p class="footer-description">
+            Your trusted partner in navigating the Indian stock market. We provide research-based 
+            stock recommendations, comprehensive courses, and expert guidance to help you achieve 
+            your financial goals.
+          </p>
+          
+          <!-- SEBI Registration Badge -->
+          <div class="sebi-info">
+            <div class="sebi-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9,12 12,15 16,10"></polyline>
+              </svg>
+              <span>SEBI Registered Research Analyst</span>
+            </div>
+            <p class="sebi-reg-no">Registration No: INH000XXXXXX</p>
+          </div>
+          
+          <!-- Social Links -->
+          <div class="social-links">
+            @for (social of socialLinks; track social.url) {
+              <a 
+                [href]="social.url" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                [attr.aria-label]="social.label"
+                class="social-link"
+              >
+                @switch (social.icon) {
+                  @case ('twitter') {
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                  }
+                  @case ('instagram') {
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                  }
+                  @case ('youtube') {
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                  }
+                  @case ('telegram') {
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                    </svg>
+                  }
+                }
+              </a>
+            }
+          </div>
+        </div>
+        
+        <!-- Quick Links Column -->
+        <div class="footer-column">
+          <h4 class="footer-column-title">Quick Links</h4>
+          <ul class="footer-links">
+            @for (link of quickLinks; track link.path) {
+              <li>
+                <a [routerLink]="link.path">{{ link.label }}</a>
+              </li>
+            }
+          </ul>
+        </div>
+        
+        <!-- Services Column -->
+        <div class="footer-column">
+          <h4 class="footer-column-title">Services</h4>
+          <ul class="footer-links">
+            @for (link of serviceLinks; track link.path) {
+              <li>
+                <a [routerLink]="link.path">{{ link.label }}</a>
+              </li>
+            }
+          </ul>
+        </div>
+        
+        <!-- Legal Column -->
+        <div class="footer-column">
+          <h4 class="footer-column-title">Legal</h4>
+          <ul class="footer-links">
+            @for (link of legalLinks; track link.path) {
+              <li>
+                <a [routerLink]="link.path">{{ link.label }}</a>
+              </li>
+            }
+          </ul>
+        </div>
+        
+        <!-- Contact Column -->
+        <div class="footer-column">
+          <h4 class="footer-column-title">Contact Us</h4>
+          <div class="contact-info">
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <a href="tel:+919876543210">+91 98765 43210</a>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <a href="mailto:support@risingstockofindia.com">support&#64;risingstockofindia.com</a>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>Mumbai, Maharashtra, India</span>
+            </div>
+            <div class="contact-item working-hours">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Mon - Sat: 9:00 AM - 6:00 PM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Disclaimer -->
+  <div class="footer-disclaimer">
+    <div class="container">
+      <p>
+        <strong>Disclaimer:</strong> Investment in securities market are subject to market risks. 
+        Read all the related documents carefully before investing. Registration granted by SEBI, 
+        enlistment as RA with Exchange and certification from NISM in no way guarantee performance 
+        of the intermediary or provide any assurance of returns to investors.
+      </p>
+    </div>
+  </div>
+  
+  <!-- Copyright -->
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-content">
+        <p class="copyright">
+          © {{ currentYear }} Rising Stock of India. All rights reserved.
+        </p>
+        <p class="made-with">
+          Made with <span class="heart">❤</span> in India
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

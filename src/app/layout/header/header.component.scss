@@ -1,0 +1,338 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header-height-mobile;
+  z-index: $z-sticky;
+  background: transparent;
+  transition: $transition-default;
+  
+  @include md {
+    height: $header-height;
+  }
+  
+  &.scrolled {
+    background: $glass-bg;
+    backdrop-filter: blur($glass-blur);
+    -webkit-backdrop-filter: blur($glass-blur);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: $shadow-lg;
+  }
+}
+
+.header-container {
+  @include container;
+  @include flex-between;
+  height: 100%;
+}
+
+// Logo
+.logo {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-name {
+  font-family: $font-heading;
+  font-size: $text-lg;
+  font-weight: $font-bold;
+  color: $text-primary;
+  
+  @include md {
+    font-size: $text-xl;
+  }
+}
+
+.logo-tagline {
+  font-size: $text-xs;
+  color: $primary-500;
+  font-weight: $font-medium;
+  letter-spacing: $tracking-wide;
+}
+
+// Desktop Navigation
+.nav-desktop {
+  display: none;
+  align-items: center;
+  gap: $space-1;
+  
+  @include lg {
+    display: flex;
+  }
+}
+
+.nav-link {
+  padding: $space-2 $space-4;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $text-secondary;
+  text-decoration: none;
+  border-radius: $radius-lg;
+  transition: $transition-fast;
+  
+  &:hover {
+    color: $text-primary;
+    background: rgba($primary-500, 0.1);
+    text-decoration: none;
+  }
+  
+  &.active {
+    color: $primary-500;
+    background: rgba($primary-500, 0.1);
+  }
+}
+
+// Header Actions
+.header-actions {
+  display: none;
+  align-items: center;
+  gap: $space-3;
+  
+  @include lg {
+    display: flex;
+  }
+}
+
+.btn-login {
+  @include button-ghost;
+  padding: $space-2 $space-4;
+  font-size: $text-sm;
+  
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.btn-register {
+  @include button-primary;
+  padding: $space-2 $space-5;
+  font-size: $text-sm;
+  
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// Mobile Menu Toggle
+.mobile-menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  padding: $space-2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
+  
+  @include lg {
+    display: none;
+  }
+  
+  .hamburger-line {
+    width: 24px;
+    height: 2px;
+    background: $text-primary;
+    border-radius: $radius-full;
+    transition: $transition-default;
+  }
+  
+  &.active {
+    .hamburger-line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    
+    .hamburger-line:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    
+    .hamburger-line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+}
+
+// Mobile Menu Overlay
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: $z-modal-backdrop;
+  opacity: 0;
+  visibility: hidden;
+  transition: $transition-default;
+  
+  @include lg {
+    display: none;
+  }
+  
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// Mobile Menu
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(320px, 85vw);
+  height: 100vh;
+  background: $bg-secondary;
+  z-index: $z-modal;
+  transform: translateX(100%);
+  transition: transform $duration-300 $ease-smooth;
+  display: flex;
+  flex-direction: column;
+  
+  @include lg {
+    display: none;
+  }
+  
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+.mobile-menu-header {
+  @include flex-between;
+  padding: $space-4 $space-6;
+  border-bottom: 1px solid $border-light;
+}
+
+.mobile-menu-title {
+  font-family: $font-heading;
+  font-size: $text-lg;
+  font-weight: $font-semibold;
+  color: $text-primary;
+}
+
+.mobile-menu-close {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  color: $text-secondary;
+  cursor: pointer;
+  border-radius: $radius-lg;
+  transition: $transition-fast;
+  
+  &:hover {
+    background: $bg-tertiary;
+    color: $text-primary;
+  }
+}
+
+.mobile-nav-links {
+  flex: 1;
+  padding: $space-4 0;
+  overflow-y: auto;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: $space-4 $space-6;
+  font-size: $text-base;
+  font-weight: $font-medium;
+  color: $text-secondary;
+  text-decoration: none;
+  transition: $transition-fast;
+  
+  &:hover {
+    color: $text-primary;
+    background: $bg-tertiary;
+    text-decoration: none;
+  }
+  
+  &.active {
+    color: $primary-500;
+    background: rgba($primary-500, 0.1);
+    border-left: 3px solid $primary-500;
+  }
+}
+
+.mobile-menu-actions {
+  padding: $space-4 $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  border-top: 1px solid $border-light;
+}
+
+.btn-login-mobile {
+  @include button-secondary;
+  width: 100%;
+  text-align: center;
+  
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.btn-register-mobile {
+  @include button-primary;
+  width: 100%;
+  text-align: center;
+  
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.mobile-menu-footer {
+  padding: $space-4 $space-6;
+  border-top: 1px solid $border-light;
+}
+
+.sebi-badge {
+  @include flex-start;
+  gap: $space-2;
+  padding: $space-3 $space-4;
+  background: rgba($success-500, 0.1);
+  border-radius: $radius-lg;
+  
+  svg {
+    color: $success-500;
+  }
+  
+  span {
+    font-size: $text-sm;
+    font-weight: $font-medium;
+    color: $success-500;
+  }
+}

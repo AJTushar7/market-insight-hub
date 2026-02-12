@@ -1,0 +1,543 @@
+<!-- Market Ticker -->
+<div class="ticker-container">
+  <div class="ticker-wrapper">
+    <div class="ticker-content">
+      @for (item of tickerData; track item.symbol) {
+        <div class="ticker-item">
+          <span class="ticker-symbol">{{ item.symbol }}</span>
+          <span class="ticker-price">₹{{ item.price }}</span>
+          <span class="ticker-change" [class.positive]="item.isPositive" [class.negative]="!item.isPositive">
+            {{ item.change }}
+          </span>
+        </div>
+      }
+      <!-- Duplicate for seamless loop -->
+      @for (item of tickerData; track item.symbol) {
+        <div class="ticker-item">
+          <span class="ticker-symbol">{{ item.symbol }}</span>
+          <span class="ticker-price">₹{{ item.price }}</span>
+          <span class="ticker-change" [class.positive]="item.isPositive" [class.negative]="!item.isPositive">
+            {{ item.change }}
+          </span>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-background">
+    <div class="hero-gradient"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-chart-bg">
+      <svg viewBox="0 0 1200 400" preserveAspectRatio="none">
+        <path class="chart-wave" d="M0,200 Q150,150 300,180 T600,160 T900,200 T1200,140" />
+        <path class="chart-wave chart-wave-2" d="M0,250 Q150,200 300,230 T600,210 T900,250 T1200,190" />
+      </svg>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <!-- SEBI Badge -->
+        <div class="sebi-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <polyline points="9,12 12,15 16,10"></polyline>
+          </svg>
+          <span>SEBI Registered Research Analyst</span>
+        </div>
+        
+        <h1 class="hero-title">
+          Smart Investments,
+          <span class="gradient-text">Real Results</span>
+        </h1>
+        
+        <p class="hero-description">
+          Join thousands of investors who trust Rising Stock of India for 
+          research-based stock recommendations, expert guidance, and comprehensive 
+          market education. Start your wealth creation journey today.
+        </p>
+        
+        <div class="hero-cta">
+          <a routerLink="/services" class="btn-primary-hero">
+            <span>Explore Services</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <button class="btn-secondary-hero" (click)="scrollToServices()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>How It Works</span>
+          </button>
+        </div>
+        
+        <!-- Trust indicators -->
+        <div class="trust-indicators">
+          <div class="trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>SEBI Compliant</span>
+          </div>
+          <div class="trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>15,000+ Clients</span>
+          </div>
+          <div class="trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span>4.8/5 Rating</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hero Visual -->
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <span class="card-title">Portfolio Performance</span>
+            <span class="card-badge positive">+32.5% YTD</span>
+          </div>
+          <div class="hero-chart">
+            <svg viewBox="0 0 300 150" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="heroChartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="rgba(0, 191, 166, 0.4)" />
+                  <stop offset="100%" stop-color="rgba(0, 191, 166, 0)" />
+                </linearGradient>
+              </defs>
+              <path 
+                class="hero-chart-area"
+                d="M0,120 L30,100 L60,110 L90,85 L120,90 L150,60 L180,70 L210,40 L240,50 L270,25 L300,35 L300,150 L0,150 Z"
+                fill="url(#heroChartGradient)"
+              />
+              <path 
+                class="hero-chart-line"
+                d="M0,120 L30,100 L60,110 L90,85 L120,90 L150,60 L180,70 L210,40 L240,50 L270,25 L300,35"
+                fill="none"
+                stroke="#00BFA6"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div class="hero-card-stats">
+            <div class="stat-item">
+              <span class="stat-label">Total Invested</span>
+              <span class="stat-value">₹5,00,000</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Current Value</span>
+              <span class="stat-value positive">₹6,62,500</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Returns</span>
+              <span class="stat-value positive">+₹1,62,500</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Floating elements -->
+        <div class="floating-badge stock-alert">
+          <div class="alert-icon positive">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23,6 13.5,15.5 8.5,10.5 1,18"></polyline>
+              <polyline points="17,6 23,6 23,12"></polyline>
+            </svg>
+          </div>
+          <div class="alert-content">
+            <span class="alert-stock">RELIANCE</span>
+            <span class="alert-text">Target achieved!</span>
+          </div>
+        </div>
+        
+        <div class="floating-badge new-member">
+          <div class="member-avatar">AK</div>
+          <div class="member-content">
+            <span class="member-name">Amit Kumar</span>
+            <span class="member-text">Just joined Premium!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section" #statsSection>
+  <div class="container">
+    <div class="stats-grid" [class.animated]="statsAnimated()">
+      @for (stat of stats; track stat.label; let i = $index) {
+        <div class="stat-card" [style.animation-delay.ms]="i * 100">
+          <span class="stat-number">
+            <span class="counter">{{ stat.value }}</span>{{ stat.suffix }}
+          </span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        Our Services
+      </span>
+      <h2 class="section-title">Comprehensive Investment Solutions</h2>
+      <p class="section-subtitle">
+        From beginner education to advanced portfolio management, we offer 
+        everything you need to succeed in the stock market.
+      </p>
+    </div>
+    
+    <div class="services-grid">
+      @for (service of services; track service.title) {
+        <a [routerLink]="service.link" class="service-card" [class.popular]="service.popular">
+          @if (service.popular) {
+            <span class="popular-badge">Most Popular</span>
+          }
+          <div class="service-icon">
+            @switch (service.icon) {
+              @case ('crown') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path>
+                </svg>
+              }
+              @case ('graduation') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                </svg>
+              }
+              @case ('chart') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="20" x2="18" y2="10"></line>
+                  <line x1="12" y1="20" x2="12" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+              }
+              @case ('target') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <circle cx="12" cy="12" r="6"></circle>
+                  <circle cx="12" cy="12" r="2"></circle>
+                </svg>
+              }
+              @case ('users') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              }
+              @case ('book') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              }
+            }
+          </div>
+          <h3 class="service-title">{{ service.title }}</h3>
+          <p class="service-description">{{ service.description }}</p>
+          <span class="service-link">
+            Learn more
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        How It Works
+      </span>
+      <h2 class="section-title">Start in 4 Simple Steps</h2>
+      <p class="section-subtitle">
+        Getting started with our advisory services is quick and easy. 
+        Follow these simple steps to begin your investment journey.
+      </p>
+    </div>
+    
+    <div class="steps-grid">
+      @for (step of steps; track step.number; let i = $index; let last = $last) {
+        <div class="step-card">
+          <div class="step-number">{{ step.number }}</div>
+          <div class="step-content">
+            <h3 class="step-title">{{ step.title }}</h3>
+            <p class="step-description">{{ step.description }}</p>
+          </div>
+          @if (!last) {
+            <div class="step-connector">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          }
+        </div>
+      }
+    </div>
+    
+    <div class="cta-center">
+      <a routerLink="/auth/register" class="btn-primary-lg">
+        Get Started Now
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Expectations Section -->
+<section class="expectations-section">
+  <div class="container">
+    <div class="expectations-grid">
+      <!-- What to Expect -->
+      <div class="expectation-card positive">
+        <div class="expectation-header">
+          <div class="expectation-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <h3>What to Expect</h3>
+        </div>
+        <ul class="expectation-list">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Research-based stock recommendations
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Regular updates on covered companies
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Expert hand-holding on investment journey
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Transparent performance tracking
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Risk management guidance
+          </li>
+        </ul>
+      </div>
+      
+      <!-- What NOT to Expect -->
+      <div class="expectation-card negative">
+        <div class="expectation-header">
+          <div class="expectation-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="15" y1="9" x2="9" y2="15"></line>
+              <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+          </div>
+          <h3>What NOT to Expect</h3>
+        </div>
+        <ul class="expectation-list">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            Intraday or day trading tips
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            Handling of your Demat account
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            Guaranteed returns promises
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            Profit sharing services
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            Services without proper KYC
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        Testimonials
+      </span>
+      <h2 class="section-title">What Our Clients Say</h2>
+      <p class="section-subtitle">
+        Don't just take our word for it. Here's what our satisfied clients 
+        have to say about their experience with us.
+      </p>
+    </div>
+    
+    <div class="testimonials-grid">
+      @for (testimonial of testimonials; track testimonial.name) {
+        <div class="testimonial-card">
+          <div class="testimonial-rating">
+            @for (star of [1,2,3,4,5]; track star) {
+              <svg 
+                width="18" 
+                height="18" 
+                viewBox="0 0 24 24" 
+                [class.filled]="star <= testimonial.rating"
+              >
+                <polygon 
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                  [attr.fill]="star <= testimonial.rating ? '#FFC107' : 'none'"
+                  [attr.stroke]="star <= testimonial.rating ? '#FFC107' : '#6E7681'"
+                  stroke-width="2"
+                />
+              </svg>
+            }
+          </div>
+          <p class="testimonial-content">"{{ testimonial.content }}"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">{{ testimonial.avatar }}</div>
+            <div class="author-info">
+              <span class="author-name">{{ testimonial.name }}</span>
+              <span class="author-role">{{ testimonial.role }}</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        FAQs
+      </span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-subtitle">
+        Find answers to common questions about our services and how we operate.
+      </p>
+    </div>
+    
+    <div class="faq-list">
+      @for (faq of faqs; track faq.question; let i = $index) {
+        <div class="faq-item" [class.open]="faq.isOpen">
+          <button class="faq-question" (click)="toggleFaq(i)">
+            <span>{{ faq.question }}</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline [attr.points]="faq.isOpen ? '18 15 12 9 6 15' : '6 9 12 15 18 9'"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>{{ faq.answer }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Ready to Start Your Investment Journey?</h2>
+      <p>
+        Join thousands of investors who trust Rising Stock of India for 
+        their wealth creation goals. Get started today with a free consultation.
+      </p>
+      <div class="cta-buttons">
+        <a routerLink="/auth/register" class="btn-primary-cta">
+          Start Free Trial
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <a routerLink="/contact" class="btn-secondary-cta">
+          Talk to Expert
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

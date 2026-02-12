@@ -1,0 +1,319 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  background: $bg-primary;
+}
+
+.auth-container {
+  display: flex;
+  width: 100%;
+  
+  @include md-down {
+    flex-direction: column;
+  }
+}
+
+.auth-left {
+  flex: 1;
+  display: none;
+  background: $bg-secondary;
+  padding: $space-12;
+  
+  @include lg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.auth-branding {
+  max-width: 450px;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  text-decoration: none;
+  margin-bottom: $space-10;
+  
+  .logo-icon {
+    width: 48px;
+    height: 48px;
+    svg { width: 100%; height: 100%; }
+  }
+  
+  .logo-text {
+    font-family: $font-heading;
+    font-size: $text-xl;
+    font-weight: $font-bold;
+    color: $text-primary;
+  }
+  
+  &:hover { text-decoration: none; }
+}
+
+.auth-branding h1 {
+  font-size: $text-4xl;
+  font-weight: $font-bold;
+  color: $text-primary;
+  margin-bottom: $space-4;
+}
+
+.auth-branding > p {
+  font-size: $text-lg;
+  color: $text-secondary;
+  margin-bottom: $space-8;
+}
+
+.auth-features {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    color: $success-500;
+    flex-shrink: 0;
+  }
+  
+  span {
+    font-size: $text-sm;
+    color: $text-secondary;
+  }
+}
+
+.auth-right {
+  flex: 1;
+  @include flex-center;
+  padding: $space-8;
+  
+  @include lg {
+    padding: $space-12;
+  }
+}
+
+.auth-form-wrapper {
+  width: 100%;
+  max-width: 480px;
+  
+  h2 {
+    font-size: $text-2xl;
+    font-weight: $font-bold;
+    color: $text-primary;
+    margin-bottom: $space-2;
+    text-align: center;
+    
+    @include lg { text-align: left; }
+  }
+  
+  .auth-subtitle {
+    font-size: $text-sm;
+    color: $text-muted;
+    margin-bottom: $space-6;
+    text-align: center;
+    
+    @include lg { text-align: left; }
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-4;
+  
+  @include sm {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.auth-form {
+  .form-group {
+    margin-bottom: $space-4;
+    
+    label {
+      display: block;
+      font-size: $text-sm;
+      font-weight: $font-medium;
+      color: $text-primary;
+      margin-bottom: $space-2;
+    }
+    
+    input:not([type="checkbox"]) {
+      @include input-base;
+    }
+  }
+  
+  .input-wrapper {
+    position: relative;
+    
+    input {
+      padding-right: $space-12;
+    }
+    
+    .toggle-password {
+      position: absolute;
+      right: $space-2;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      @include flex-center;
+      background: transparent;
+      border: none;
+      color: $text-muted;
+      cursor: pointer;
+      border-radius: $radius-lg;
+      transition: $transition-fast;
+      
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+      
+      &:hover {
+        background: $bg-tertiary;
+        color: $text-secondary;
+      }
+    }
+  }
+  
+  .password-hint {
+    font-size: $text-xs;
+    color: $text-muted;
+    margin-top: $space-1;
+    margin-bottom: 0;
+  }
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  font-size: $text-sm;
+  color: $text-secondary;
+  cursor: pointer;
+  
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: $primary-500;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  
+  a {
+    color: $primary-500;
+    text-decoration: none;
+    
+    &:hover { text-decoration: underline; }
+  }
+}
+
+.btn-register {
+  @include button-primary;
+  width: 100%;
+  padding: $space-4;
+  font-size: $text-base;
+  margin-top: $space-2;
+  
+  svg {
+    width: 18px;
+    height: 18px;
+    transition: transform $duration-200 $ease-smooth;
+  }
+  
+  &:hover:not(:disabled) svg {
+    transform: translateX(4px);
+  }
+  
+  .spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(white, 0.3);
+    border-top-color: white;
+    border-radius: $radius-full;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: $space-5 0;
+  
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: $border-light;
+  }
+  
+  span {
+    padding: 0 $space-4;
+    font-size: $text-xs;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: $tracking-wide;
+  }
+}
+
+.social-login {
+  display: flex;
+  gap: $space-3;
+  margin-bottom: $space-5;
+}
+
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  background: $bg-tertiary;
+  border: 1px solid $border-default;
+  border-radius: $radius-lg;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $text-primary;
+  cursor: pointer;
+  transition: $transition-fast;
+  
+  svg { width: 20px; height: 20px; }
+  
+  &:hover {
+    background: $bg-elevated;
+    border-color: $border-focus;
+  }
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: $text-sm;
+  color: $text-secondary;
+  margin: 0;
+  
+  a {
+    color: $primary-500;
+    font-weight: $font-medium;
+    text-decoration: none;
+    
+    &:hover { text-decoration: underline; }
+  }
+}
