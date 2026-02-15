@@ -1,53 +1,54 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { LoaderComponent } from './shared/components/loader/loader.component';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
 import { WhatsappButtonComponent } from './shared/components/whatsapp-button/whatsapp-button.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
+import { AnalyticsService } from './shared/services/analytics.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    HeaderComponent,
-    FooterComponent,
-    WhatsappButtonComponent,
-    LoaderComponent,
-  ],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, WhatsappButtonComponent],
   template: `
-    <app-loader />
-    <div class="app-wrapper">
-      <app-header />
-      <main class="main-content">
-        <router-outlet />
-      </main>
-      <app-footer />
-    </div>
+    <app-header />
+    <main>
+      <router-outlet />
+    </main>
+    <app-footer />
     <app-whatsapp-button />
   `,
   styles: [
     `
-      @use 'styles/variables' as *;
-      @use 'styles/mixins' as *;
-
-      .app-wrapper {
-        display: flex;
-        flex-direction: column;
+      :host {
+        display: block;
         min-height: 100vh;
       }
-
-      .main-content {
-        flex: 1;
-        margin-top: $header-height-mobile;
-
-        @include md {
-          margin-top: $header-height;
-        }
+      main {
+        min-height: 100vh;
+        padding-top: 64px;
+        display: block;
       }
     `,
   ],
 })
-export class App {
-  title = 'Rising Stock of India';
+export class AppComponent implements OnInit {
+  private router = inject(Router);
+  private analytics = inject(AnalyticsService);
+
+  constructor() {
+    console.log('AppComponent constructed');
+  }
+
+  ngOnInit() {
+    console.log('AppComponent initialized');
+    // Track page views on route changes
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        const navEvent = event as NavigationEnd;
+        this.analytics.trackPageView(navEvent.urlAfterRedirects, document.title);
+      });
+  }
 }

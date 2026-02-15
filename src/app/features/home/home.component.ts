@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate.directive';
 
 interface Service {
   icon: string;
@@ -40,7 +41,7 @@ interface FAQ {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ScrollAnimateDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -50,7 +51,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   statsAnimated = signal(false);
 
   stats: Stat[] = [
-    { value: '15', suffix: 'K+', label: 'Happy Clients' },
+    { value: '100', suffix: '+', label: 'Happy Customers' },
     { value: '95', suffix: '%', label: 'Success Rate' },
     { value: '8', suffix: '+', label: 'Years Experience' },
     { value: '500', suffix: '+', label: 'Stock Recommendations' },

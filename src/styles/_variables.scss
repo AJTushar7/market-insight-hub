@@ -74,22 +74,22 @@ $stock-purple: #a855f7;
 $stock-cyan: #06b6d4;
 
 // ----------------------------------------
-// Theme Colors (Dark Mode - Default)
+// Theme Colors (Dynamic)
 // ----------------------------------------
 
-$bg-primary: $neutral-900;
-$bg-secondary: $neutral-800;
-$bg-tertiary: $neutral-700;
-$bg-elevated: $neutral-600;
-$bg-overlay: rgba(0, 0, 0, 0.6);
+$bg-primary: var(--bg-primary);
+$bg-secondary: var(--bg-secondary);
+$bg-tertiary: var(--bg-tertiary);
+$bg-elevated: var(--bg-elevated);
+$bg-overlay: var(--shadow-color);
 
-$text-primary: $neutral-50;
-$text-secondary: $neutral-300;
-$text-tertiary: $neutral-400;
-$text-muted: $neutral-500;
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-tertiary: var(--text-tertiary);
+$text-muted: var(--text-muted);
 
-$border-default: $neutral-600;
-$border-light: $neutral-700;
+$border-default: var(--border-default);
+$border-light: var(--border-light);
 $border-focus: $primary-500;
 
 // ----------------------------------------
@@ -104,15 +104,15 @@ $gradient-hero-radial: radial-gradient(
   rgba($primary-500, 0.2) 0%,
   transparent 60%
 );
-$gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+$gradient-card: linear-gradient(145deg, rgba(var(--bg-elevated-rgb), 0.5) 0%, transparent 100%);
 $gradient-card-hover: linear-gradient(145deg, rgba($primary-500, 0.1) 0%, transparent 100%);
-$gradient-dark: linear-gradient(180deg, $neutral-800 0%, $neutral-900 100%);
+$gradient-dark: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
 $gradient-profit: linear-gradient(135deg, $stock-green 0%, darken($stock-green, 15%) 100%);
 $gradient-loss: linear-gradient(135deg, $stock-red 0%, darken($stock-red, 15%) 100%);
 $gradient-glass: linear-gradient(
   135deg,
-  rgba(255, 255, 255, 0.1) 0%,
-  rgba(255, 255, 255, 0.05) 100%
+  rgba(var(--text-primary-rgb), 0.1) 0%,
+  rgba(var(--text-primary-rgb), 0.05) 100%
 );
 
 // ----------------------------------------
@@ -234,13 +234,13 @@ $radius-full: 9999px;
 // Box Shadows
 // ----------------------------------------
 
-$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-$shadow-default: 0 2px 4px rgba(0, 0, 0, 0.3);
-$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
-$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4);
-$shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.5);
-$shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+$shadow-sm: 0 1px 2px var(--shadow-color);
+$shadow-default: 0 2px 4px var(--shadow-color);
+$shadow-md: 0 4px 6px var(--shadow-color);
+$shadow-lg: 0 10px 15px var(--shadow-color);
+$shadow-xl: 0 20px 25px var(--shadow-color);
+$shadow-2xl: 0 25px 50px var(--shadow-color);
+$shadow-inner: inset 0 2px 4px var(--shadow-color);
 
 // Glow Shadows
 $shadow-glow-primary: 0 0 20px rgba($primary-500, 0.4);
@@ -334,7 +334,8 @@ $input-border-width: 1px;
 // Glassmorphism
 // ----------------------------------------
 
-$glass-bg: rgba($neutral-800, 0.8);
-$glass-bg-light: rgba($neutral-700, 0.6);
+$glass-bg: rgba(var(--bg-secondary-rgb), 0.8);
+$glass-bg-light: rgba(var(--bg-secondary-rgb), 0.6);
 $glass-blur: 12px;
-$glass-border: 1px solid rgba(255, 255, 255, 0.1);
+$glass-border: 1px solid rgba(var(--text-primary-rgb), 0.1);
+

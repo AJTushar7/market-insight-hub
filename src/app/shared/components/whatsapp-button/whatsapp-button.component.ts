@@ -1,5 +1,6 @@
-import { Component, signal, HostListener, OnInit } from '@angular/core';
+import { Component, signal, HostListener, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AnalyticsService } from '../../services/analytics.service';
 
 @Component({
   selector: 'app-whatsapp-button',
@@ -15,6 +16,7 @@ import { CommonModule } from '@angular/common';
       [class.expanded]="isExpanded()"
       (mouseenter)="isExpanded.set(true)"
       (mouseleave)="isExpanded.set(false)"
+      (click)="trackWhatsAppClick()"
       aria-label="Chat on WhatsApp"
     >
       <div class="whatsapp-icon">
@@ -143,8 +145,10 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class WhatsappButtonComponent implements OnInit {
+  private analytics = inject(AnalyticsService);
+
   whatsappUrl =
-    'https://wa.me/919876543210?text=Hi!%20I%20am%20interested%20in%20your%20stock%20advisory%20services.';
+    'https://wa.me/919999999999?text=Hi!%20I%20am%20interested%20in%20your%20stock%20advisory%20services.%20Please%20share%20more%20details.';
   showButton = signal(false);
   isExpanded = signal(false);
 
@@ -158,5 +162,9 @@ export class WhatsappButtonComponent implements OnInit {
     setTimeout(() => {
       this.showButton.set(true);
     }, 2000);
+  }
+
+  trackWhatsAppClick() {
+    this.analytics.trackWhatsAppClick('floating_button');
   }
 }

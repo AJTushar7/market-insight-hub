@@ -1,0 +1,50 @@
+:root {
+  // Dark Theme (Default)
+  --bg-primary-rgb: 13, 17, 23;
+  --bg-secondary-rgb: 22, 27, 34;
+  --bg-tertiary-rgb: 33, 38, 45;
+  --bg-elevated-rgb: 48, 54, 61;
+  
+  --text-primary-rgb: 240, 246, 252;
+  --text-secondary-rgb: 139, 148, 158;
+  --text-tertiary-rgb: 110, 118, 129;
+  --text-muted-rgb: 72, 79, 88;
+  
+  --border-default-rgb: 48, 54, 61;
+  --border-light-rgb: 33, 38, 45;
+  
+  --shadow-color-rgb: 0, 0, 0;
+  
+  // Derived HEX/RGB variables for direct usage
+  --bg-primary: rgb(var(--bg-primary-rgb));
+  --bg-secondary: rgb(var(--bg-secondary-rgb));
+  --bg-tertiary: rgb(var(--bg-tertiary-rgb));
+  --bg-elevated: rgb(var(--bg-elevated-rgb));
+  
+  --text-primary: rgb(var(--text-primary-rgb));
+  --text-secondary: rgb(var(--text-secondary-rgb));
+  --text-tertiary: rgb(var(--text-tertiary-rgb));
+  --text-muted: rgb(var(--text-muted-rgb));
+  
+  --border-default: rgb(var(--border-default-rgb));
+  --border-light: rgb(var(--border-light-rgb));
+  
+  --shadow-color: rgba(var(--shadow-color-rgb), 0.5);
+}
+
+body.light-theme {
+  --bg-primary-rgb: 255, 255, 255;
+  --bg-secondary-rgb: 243, 244, 246;
+  --bg-tertiary-rgb: 229, 231, 235;
+  --bg-elevated-rgb: 255, 255, 255;
+  
+  --text-primary-rgb: 17, 24, 39;
+  --text-secondary-rgb: 75, 85, 99;
+  --text-tertiary-rgb: 107, 114, 128;
+  --text-muted-rgb: 156, 163, 175;
+  
+  --border-default-rgb: 229, 231, 235;
+  --border-light-rgb: 243, 244, 246;
+  
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}

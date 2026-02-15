@@ -6,7 +6,7 @@
   border-top: 1px solid $border-light;
 }
 
-// Newsletter Section
+// Newsletter/CTA Section
 .newsletter-section {
   background: $gradient-primary;
   padding: $space-12 0;
@@ -46,7 +46,7 @@
     color: rgba(255, 255, 255, 0.9);
     font-size: $text-base;
     margin: 0;
-    max-width: 450px;
+    max-width: 500px;
     
     @include lg {
       max-width: none;
@@ -54,59 +54,55 @@
   }
 }
 
-.newsletter-form {
+.newsletter-cta {
   display: flex;
   flex-direction: column;
   gap: $space-3;
-  width: 100%;
-  max-width: 450px;
-  margin: 0 auto;
-  
+  align-items: center;
+
   @include sm {
     flex-direction: row;
   }
-  
+
   @include lg {
-    margin: 0;
-    max-width: 400px;
+    flex-shrink: 0;
   }
-  
-  input {
-    flex: 1;
-    padding: $space-4;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: $radius-lg;
-    color: white;
-    font-size: $text-base;
-    
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-    
-    &:focus {
-      outline: none;
-      background: rgba(255, 255, 255, 0.2);
-      border-color: white;
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
-    }
+}
+
+.btn-whatsapp-footer {
+  @include button-base;
+  padding: $space-4 $space-8;
+  font-size: $text-lg;
+  background: white;
+  color: #25d366;
+  gap: $space-3;
+  white-space: nowrap;
+
+  svg {
+    flex-shrink: 0;
   }
-  
-  .btn-subscribe {
-    padding: $space-4 $space-6;
-    background: white;
-    color: $primary-700;
-    border: none;
-    border-radius: $radius-lg;
-    font-weight: $font-semibold;
-    cursor: pointer;
-    transition: $transition-fast;
-    white-space: nowrap;
-    
-    &:hover {
-      background: $neutral-100;
-      transform: translateY(-2px);
-    }
+
+  &:hover {
+    background: $neutral-100;
+    transform: translateY(-2px);
+    box-shadow: $shadow-xl;
+    text-decoration: none;
+  }
+}
+
+.btn-contact-footer {
+  @include button-base;
+  padding: $space-4 $space-8;
+  font-size: $text-lg;
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(white, 0.5);
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(white, 0.1);
+    border-color: white;
+    text-decoration: none;
   }
 }
 
@@ -255,10 +251,6 @@
 }
 
 // Footer Columns
-.footer-column {
-  // Column styling
-}
-
 .footer-column-title {
   font-family: $font-heading;
   font-size: $text-base;
@@ -311,6 +303,10 @@
     color: $primary-500;
     flex-shrink: 0;
     margin-top: 2px;
+  }
+
+  .whatsapp-icon-sm {
+    color: #25d366;
   }
   
   a, span {

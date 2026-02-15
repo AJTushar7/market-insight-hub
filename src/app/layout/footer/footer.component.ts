@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { AnalyticsService } from '../../shared/services/analytics.service';
 
 @Component({
   selector: 'app-footer',
@@ -10,6 +11,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
+  private analytics = inject(AnalyticsService);
+
   currentYear = new Date().getFullYear();
 
   quickLinks = [
@@ -43,4 +46,20 @@ export class FooterComponent {
     { icon: 'youtube', url: 'https://youtube.com/@risingstockindia', label: 'YouTube' },
     { icon: 'telegram', url: 'https://t.me/risingstockindia', label: 'Telegram' },
   ];
+
+  onWhatsAppClick() {
+    this.analytics.trackWhatsAppClick('footer');
+  }
+
+  onEmailClick() {
+    this.analytics.trackEmailClick('footer');
+  }
+
+  onPhoneClick() {
+    this.analytics.trackPhoneClick('footer');
+  }
+
+  onSocialClick(platform: string) {
+    this.analytics.trackSocialClick(platform);
+  }
 }

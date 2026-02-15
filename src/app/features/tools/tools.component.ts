@@ -1,20 +1,21 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate.directive';
 
 @Component({
   selector: 'app-tools',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ScrollAnimateDirective],
   template: `
-    <section class="page-hero">
+    <section class="page-hero" appScrollAnimate>
       <div class="container">
         <h1>Investment Tools</h1>
         <p>Free calculators and tools to help plan your investments.</p>
       </div>
     </section>
 
-    <section class="tools-content">
+    <section class="tools-content" appScrollAnimate>
       <div class="container">
         <div class="tools-grid">
           <!-- SIP Calculator -->
@@ -300,20 +301,41 @@ export class ToolsComponent {
   }
 
   calculateSIP() {
-    const monthlyRate = this.sipReturn / 12 / 100;
+    if (!this.sipMonthly || !this.sipYears) {
+      this.sipInvested.set(0);
+      this.sipTotal.set(0);
+      this.sipReturns.set(0);
+      return;
+    }
+
+    // Default to 12% if not provided
+    const rate = this.sipReturn || 12;
+    const monthlyRate = rate / 12 / 100;
     const months = this.sipYears * 12;
     const invested = this.sipMonthly * months;
 
-    // FV = P × ((1 + r)^n – 1) / r × (1 + r)
-    const fv =
-      this.sipMonthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
+    let fv = 0;
+    if (monthlyRate === 0) {
+      fv = invested;
+    } else {
+      fv =
+        this.sipMonthly *
+        ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) *
+        (1 + monthlyRate);
+    }
 
-    this.sipInvested.set(invested);
+    this.sipInvested.set(Math.round(invested));
     this.sipTotal.set(Math.round(fv));
     this.sipReturns.set(Math.round(fv - invested));
   }
 
   calculateCAGR() {
+    if (!this.cagrInitial || !this.cagrFinal || !this.cagrYears) {
+      this.cagrResult.set(0);
+      this.absoluteReturns.set(0);
+      return;
+    }
+
     if (this.cagrInitial > 0 && this.cagrYears > 0) {
       const cagr = (Math.pow(this.cagrFinal / this.cagrInitial, 1 / this.cagrYears) - 1) * 100;
       const absolute = ((this.cagrFinal - this.cagrInitial) / this.cagrInitial) * 100;

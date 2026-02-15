@@ -1,6 +1,8 @@
-import { Component, signal, HostListener } from '@angular/core';
+import { Component, signal, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AnalyticsService } from '../../shared/services/analytics.service';
+import { ThemeService } from '../../shared/services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +12,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  private analytics = inject(AnalyticsService);
+  themeService = inject(ThemeService);
+
   isScrolled = signal(false);
   isMobileMenuOpen = signal(false);
 
@@ -42,5 +47,9 @@ export class HeaderComponent {
   closeMobileMenu() {
     this.isMobileMenuOpen.set(false);
     document.body.style.overflow = '';
+  }
+
+  onWhatsAppClick() {
+    this.analytics.trackWhatsAppClick('header_cta');
   }
 }

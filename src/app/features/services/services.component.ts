@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate.directive';
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ScrollAnimateDirective],
   template: `
     <section class="page-hero">
       <div class="container">
@@ -22,6 +23,7 @@ import { RouterLink } from '@angular/router';
               [routerLink]="['/services', service.slug]"
               class="service-card"
               [class.featured]="service.featured"
+              appScrollAnimate
             >
               @if (service.featured) {
                 <span class="featured-badge">Most Popular</span>
@@ -177,11 +179,35 @@ import { RouterLink } from '@angular/router';
 export class ServicesComponent {
   services = [
     {
-      slug: 'premium-advisory',
-      title: 'Premium Advisory',
+      slug: 'intraday-trading',
+      title: 'Intraday Trading',
       description:
-        'Get exclusive stock recommendations from our SEBI-registered research analysts with detailed analysis.',
+        'Daily actionable tips for equity markets. Perfect for beginners to start with our Basic plan or go Premium for exclusive calls.',
+      startingPrice: 2999,
+      featured: true,
+    },
+    {
+      slug: 'future-options',
+      title: 'Future & Options (F&O)',
+      description:
+        'High-reward strategies for Nifty and Bank Nifty options. specialized hedging techniques to manage risk effectively.',
       startingPrice: 4999,
+      featured: true,
+    },
+    {
+      slug: 'commodity-trading',
+      title: 'Commodity Trading',
+      description:
+        'Expert advice for MCX markets including Gold, Silver, Crude Oil, and Natural Gas.',
+      startingPrice: 3999,
+      featured: false,
+    },
+    {
+      slug: 'premium-group',
+      title: 'Premium Group Access',
+      description:
+        'Join our elite community for real-time market updates, live trading support, and exclusive webinar access.',
+      startingPrice: 9999,
       featured: true,
     },
     {
@@ -193,30 +219,10 @@ export class ServicesComponent {
       featured: false,
     },
     {
-      slug: 'single-share',
-      title: 'Single Share Advice',
-      description: 'Get detailed Buy/Sell/Hold advice for any stock of your choice.',
-      startingPrice: 499,
-      featured: false,
-    },
-    {
-      slug: 'offline-workshop',
-      title: 'Offline Workshops',
-      description: 'Face-to-face intensive workshops for hands-on learning experience.',
-      startingPrice: 14999,
-      featured: false,
-    },
-    {
-      slug: 'ebooks',
-      title: 'E-Books & Resources',
-      description: 'Access premium e-books covering trading strategies and market psychology.',
-      startingPrice: 999,
-      featured: false,
-    },
-    {
       slug: 'one-on-one',
       title: '1-on-1 Consultation',
-      description: 'Personal consultation with our expert analysts for your specific needs.',
+      description:
+        'Personal consultation with our Chartered Accountants for bespoke financial planning.',
       startingPrice: 2499,
       featured: false,
     },
