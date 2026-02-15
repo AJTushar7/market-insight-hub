@@ -301,12 +301,52 @@
 }
 
 .hero-card {
-  background: $glass-bg;
-  backdrop-filter: blur($glass-blur);
-  border: $glass-border;
+  background: rgba(var(--bg-primary-rgb), 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(var(--border-default-rgb), 0.3);
   border-radius: $radius-2xl;
-  padding: $space-6;
-  box-shadow: $shadow-xl;
+  padding: $space-8;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.hero-chart {
+  height: 180px;
+  margin: $space-6 0;
+  display: flex;
+  align-items: flex-end;
+  gap: $space-3;
+  padding: $space-4;
+  background: rgba(var(--bg-secondary-rgb), 0.3);
+  border-radius: $radius-xl;
+
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: $space-2;
+    width: 100%;
+    height: 100%;
+
+    .bar {
+      flex: 1;
+      background: $gradient-primary;
+      border-radius: 4px 4px 0 0;
+      animation: barGrow 1.5s ease-out forwards;
+      transform-origin: bottom;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+        filter: brightness(1.2);
+      }
+    }
+  }
+}
+
+@keyframes barGrow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
 }
 
 .hero-card-header {
@@ -314,47 +354,120 @@
   margin-bottom: $space-4;
   
   .card-title {
-    font-size: $text-lg;
-    font-weight: $font-semibold;
+    font-size: $text-xl;
+    font-weight: $font-bold;
     color: $text-primary;
   }
   
   .card-badge {
     @include badge-success;
+    padding: $space-1 $space-3;
+    font-size: $text-sm;
   }
 }
 
-.hero-chart {
-  height: 150px;
-  margin-bottom: $space-4;
-  
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-  
-  .hero-chart-line {
-    stroke-dasharray: 500;
-    stroke-dashoffset: 500;
-    animation: drawChart 2s ease-out forwards;
-  }
-  
-  .hero-chart-area {
-    opacity: 0;
-    animation: fadeInArea 1s ease-out 1.5s forwards;
+// ... (existing hero-card-stats and floating badges)
+
+// Interactive Section
+.interactive-section {
+  @include section-padding;
+  position: relative;
+  overflow: hidden;
+}
+
+.interactive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-12;
+  align-items: center;
+
+  @include lg {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: $space-20;
   }
 }
 
-@keyframes drawChart {
-  to {
-    stroke-dashoffset: 0;
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: $space-8 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    margin-bottom: $space-4;
+    font-size: $text-lg;
+    color: $text-secondary;
+
+    .list-icon {
+      width: 40px;
+      height: 40px;
+      @include flex-center;
+      background: rgba($primary-500, 0.1);
+      border-radius: $radius-lg;
+      color: $primary-500;
+    }
   }
 }
 
-@keyframes fadeInArea {
-  to {
-    opacity: 1;
+.interactive-visual {
+  @include flex-center;
+  perspective: 1000px;
+}
+
+.data-sphere {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  transform-style: preserve-3d;
+  animation: sphereRotate 20s linear infinite;
+
+  .sphere-core {
+    position: absolute;
+    inset: 50px;
+    background: radial-gradient(circle, $primary-500, transparent 70%);
+    border-radius: $radius-full;
+    filter: blur(20px);
   }
+
+  .orbit {
+    position: absolute;
+    border: 1px solid rgba($primary-500, 0.2);
+    border-radius: $radius-full;
+    inset: 0;
+
+    &-1 { transform: rotateX(60deg) rotateY(30deg); }
+    &-2 { transform: rotateX(-60deg) rotateY(-30deg); }
+    &-3 { transform: rotateY(90deg); }
+  }
+
+  .data-node {
+    position: absolute;
+    padding: $space-2 $space-4;
+    background: $glass-bg;
+    backdrop-filter: blur(8px);
+    border: $glass-border;
+    border-radius: $radius-full;
+    font-size: $text-xs;
+    font-weight: $font-bold;
+    color: $primary-500;
+    animation: counterRotate 20s linear infinite;
+
+    &.node-1 { top: 0; left: 50%; transform: translateX(-50%); }
+    &.node-2 { bottom: 0; left: 50%; transform: translateX(-50%); }
+    &.node-3 { top: 50%; right: 0; transform: translateY(-50%); }
+  }
+}
+
+@keyframes sphereRotate {
+  from { transform: rotateX(0) rotateY(0); }
+  to { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+@keyframes counterRotate {
+  from { transform: translate(-50%, -50%) rotateY(0) rotateX(0); }
+  to { transform: translate(-50%, -50%) rotateY(-360deg) rotateX(-360deg); }
 }
 
 .hero-card-stats {
@@ -554,6 +667,10 @@
     .service-icon {
       background: $primary-500;
       color: white;
+      
+      svg {
+        color: white;
+      }
     }
     
     .service-link svg {

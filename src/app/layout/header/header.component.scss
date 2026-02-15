@@ -1,6 +1,3 @@
-@use 'styles/variables' as *;
-@use 'styles/mixins' as *;
-
 .header {
   position: fixed;
   top: 0;
@@ -9,18 +6,18 @@
   height: $header-height-mobile;
   z-index: $z-sticky;
   background: transparent;
-  transition: $transition-default;
+  transition: all $duration-300 $ease-smooth;
   
   @include md {
     height: $header-height;
   }
   
   &.scrolled {
-    background: $glass-bg;
-    backdrop-filter: blur($glass-blur);
-    -webkit-backdrop-filter: blur($glass-blur);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: $shadow-lg;
+    background: rgba(var(--bg-primary-rgb), 0.7) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(var(--border-default-rgb), 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -153,7 +150,6 @@
   &:hover {
     text-decoration: none;
   }
-// ... (existing btn-contact-header)
 }
 
 .btn-theme-toggle {
@@ -170,13 +166,18 @@
   cursor: pointer;
   transition: $transition-fast;
 
+  &.mobile-only {
+    @include lg {
+      display: none;
+    }
+  }
+
   &:hover {
     background: rgba($primary-500, 0.1);
     color: $primary-500;
     border-color: rgba($primary-500, 0.2);
   }
 }
-
 
 // Mobile Menu Toggle
 .mobile-menu-toggle {

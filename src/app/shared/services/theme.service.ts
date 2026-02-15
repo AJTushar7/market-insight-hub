@@ -28,11 +28,11 @@ export class ThemeService {
       effect(() => {
         const currentTheme = this.theme();
         if (currentTheme === 'light') {
-          document.body.classList.add('light-theme');
-          document.body.classList.remove('dark-theme');
+          document.documentElement.classList.add('light-theme');
+          document.documentElement.classList.remove('dark-theme');
         } else {
-          document.body.classList.add('dark-theme');
-          document.body.classList.remove('light-theme');
+          document.documentElement.classList.add('dark-theme');
+          document.documentElement.classList.remove('light-theme');
         }
         localStorage.setItem('theme', currentTheme);
       });
