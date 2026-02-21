@@ -14,15 +14,23 @@ export class ThemeService {
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
-      // Load saved theme
+      // Check system preference first
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      // Load saved theme or use system preference
       const savedTheme = localStorage.getItem('theme') as Theme;
       if (savedTheme) {
         this.theme.set(savedTheme);
       } else {
-        // Check system preference
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        this.theme.set(prefersDark ? 'dark' : 'light');
+        this.theme.set(prefersDark.matches ? 'dark' : 'light');
       }
+
+      // Listen for system theme changes
+      prefersDark.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          this.theme.set(e.matches ? 'dark' : 'light');
+        }
+      });
 
       // Apply theme on change
       effect(() => {
@@ -30,9 +38,11 @@ export class ThemeService {
         if (currentTheme === 'light') {
           document.documentElement.classList.add('light-theme');
           document.documentElement.classList.remove('dark-theme');
+          document.documentElement.style.setProperty('color-scheme', 'light');
         } else {
           document.documentElement.classList.add('dark-theme');
           document.documentElement.classList.remove('light-theme');
+          document.documentElement.style.setProperty('color-scheme', 'dark');
         }
         localStorage.setItem('theme', currentTheme);
       });

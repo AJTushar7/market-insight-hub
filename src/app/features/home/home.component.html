@@ -1,23 +1,23 @@
 <!-- Market Ticker -->
-<div class="ticker-container">
+<div class="ticker-container" *ngIf="marketTicker.showTicker()">
   <div class="ticker-wrapper">
     <div class="ticker-content">
-      @for (item of tickerData; track item.symbol) {
+      @for (item of marketTicker.tickerData(); track item.symbol) {
         <div class="ticker-item">
           <span class="ticker-symbol">{{ item.symbol }}</span>
           <span class="ticker-price">₹{{ item.price }}</span>
           <span class="ticker-change" [class.positive]="item.isPositive" [class.negative]="!item.isPositive">
-            {{ item.change }}
+            {{ item.isPositive ? '+' : '' }}{{ item.change }}
           </span>
         </div>
       }
       <!-- Duplicate for seamless loop -->
-      @for (item of tickerData; track item.symbol) {
+      @for (item of marketTicker.tickerData(); track item.symbol) {
         <div class="ticker-item">
           <span class="ticker-symbol">{{ item.symbol }}</span>
           <span class="ticker-price">₹{{ item.price }}</span>
           <span class="ticker-change" [class.positive]="item.isPositive" [class.negative]="!item.isPositive">
-            {{ item.change }}
+            {{ item.isPositive ? '+' : '' }}{{ item.change }}
           </span>
         </div>
       }

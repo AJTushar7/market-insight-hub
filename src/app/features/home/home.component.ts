@@ -1,7 +1,9 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, signal } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate.directive';
+import { MarketTickerService } from '../../shared/services/market-ticker.service';
+import { BellService } from '../../shared/services/bell.service';
 
 interface Service {
   icon: string;
@@ -47,6 +49,9 @@ interface FAQ {
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('statsSection') statsSection!: ElementRef;
+
+  marketTicker = inject(MarketTickerService);
+  bellService = inject(BellService);
 
   statsAnimated = signal(false);
 
@@ -202,17 +207,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  // Market ticker data simulation
-  tickerData = [
-    { symbol: 'NIFTY 50', price: '22,475.85', change: '+0.65%', isPositive: true },
-    { symbol: 'SENSEX', price: '73,961.31', change: '+0.58%', isPositive: true },
-    { symbol: 'BANKNIFTY', price: '48,234.50', change: '-0.23%', isPositive: false },
-    { symbol: 'RELIANCE', price: '2,876.45', change: '+1.23%', isPositive: true },
-    { symbol: 'TCS', price: '3,891.20', change: '+0.45%', isPositive: true },
-    { symbol: 'INFY', price: '1,567.80', change: '-0.34%', isPositive: false },
-    { symbol: 'HDFC BANK', price: '1,654.30', change: '+0.89%', isPositive: true },
-    { symbol: 'ICICI BANK', price: '1,123.45', change: '+0.67%', isPositive: true },
-  ];
+  tickerData: any[] = []; // Removed simulation data as it's now in service
 
   ngOnInit() {
     // Any initialization logic

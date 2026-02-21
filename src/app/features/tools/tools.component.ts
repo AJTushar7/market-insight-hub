@@ -1,12 +1,15 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate.directive';
+import { HttpClient } from '@angular/common/http';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartConfiguration, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-tools',
   standalone: true,
-  imports: [CommonModule, FormsModule, ScrollAnimateDirective],
+  imports: [CommonModule, FormsModule, ScrollAnimateDirective, BaseChartDirective],
   template: `
     <section class="page-hero" appScrollAnimate>
       <div class="container">
@@ -17,6 +20,27 @@ import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate.d
 
     <section class="tools-content" appScrollAnimate>
       <div class="container">
+        <!-- Stock Search Tool -->
+        <div class="stock-search-tool card mb-8">
+          <h3>Stock Analysis</h3>
+          <p>Search for a stock symbol (e.g., TSLA, AAPL, RELIANCE.BSE) to see performance data.</p>
+          <div class="flex gap-4 mb-6">
+            <input type="text" [(ngModel)]="searchSymbol" class="input-base" placeholder="Enter Symbol...">
+            <button (click)="searchStock()" class="btn-primary" [disabled]="loadingSearch()">
+              {{ loadingSearch() ? 'Searching...' : 'Search' }}
+            </button>
+          </div>
+
+          <div *ngIf="chartData" class="chart-container" style="height: 400px; width: 100%;">
+             <canvas baseChart
+                [data]="chartData"
+                [options]="chartOptions"
+                [type]="chartType">
+              </canvas>
+          </div>
+          <div *ngIf="searchError" class="error-msg mt-4">{{ searchError }}</div>
+        </div>
+
         <div class="tools-grid">
           <!-- SIP Calculator -->
           <div class="tool-card">
@@ -192,7 +216,7 @@ import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate.d
         }
       }
 
-      .tool-card {
+      .tool-card, .stock-search-tool {
         @include card;
 
         h3 {
@@ -276,10 +300,34 @@ import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate.d
           }
         }
       }
+
+      .error-msg {
+        color: $stock-red;
+        font-size: $text-sm;
+      }
     `,
   ],
 })
 export class ToolsComponent {
+  private http = inject(HttpClient);
+  private apiKey = 'VPSZP19X36SIH74Q';
+
+  searchSymbol = '';
+  loadingSearch = signal(false);
+  searchError = '';
+  chartData?: ChartConfiguration['data'];
+  chartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: true }
+    },
+    scales: {
+      y: { beginAtZero: false }
+    }
+  };
+  chartType: ChartType = 'line';
+
   // SIP Calculator
   sipMonthly = 10000;
   sipReturn = 12;
@@ -298,6 +346,43 @@ export class ToolsComponent {
   constructor() {
     this.calculateSIP();
     this.calculateCAGR();
+  }
+
+  searchStock() {
+    if (!this.searchSymbol) return;
+    this.loadingSearch.set(true);
+    this.searchError = '';
+    
+    this.http.get<any>(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${this.searchSymbol}&apikey=${this.apiKey}`)
+      .subscribe({
+        next: (data) => {
+          const timeSeries = data['Time Series (Daily)'];
+          if (timeSeries) {
+            const labels = Object.keys(timeSeries).reverse().slice(-30); // Last 30 days
+            const prices = labels.map(date => parseFloat(timeSeries[date]['4. close']));
+            
+            this.chartData = {
+              labels: labels,
+              datasets: [{
+                data: prices,
+                label: this.searchSymbol,
+                borderColor: '#00BFA6',
+                backgroundColor: 'rgba(0, 191, 166, 0.1)',
+                fill: true,
+                tension: 0.4
+              }]
+            };
+            this.loadingSearch.set(false);
+          } else {
+            this.searchError = 'Symbol not found or limit reached.';
+            this.loadingSearch.set(false);
+          }
+        },
+        error: () => {
+          this.searchError = 'An error occurred. Please try again later.';
+          this.loadingSearch.set(false);
+        }
+      });
   }
 
   calculateSIP() {
