@@ -3,13 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate.directive';
 import { HttpClient } from '@angular/common/http';
-import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-tools',
   standalone: true,
-  imports: [CommonModule, FormsModule, ScrollAnimateDirective, BaseChartDirective],
+  imports: [CommonModule, FormsModule, ScrollAnimateDirective],
   template: `
     <section class="page-hero" appScrollAnimate>
       <div class="container">
@@ -31,12 +29,23 @@ import { ChartConfiguration, ChartType } from 'chart.js';
             </button>
           </div>
 
-          <div *ngIf="chartData" class="chart-container" style="height: 400px; width: 100%;">
-             <canvas baseChart
-                [data]="chartData"
-                [options]="chartOptions"
-                [type]="chartType">
-              </canvas>
+          <div *ngIf="stockData" class="stock-info mt-6">
+             <div class="info-grid">
+               <div class="info-item">
+                 <span class="label">Latest Price</span>
+                 <span class="value">₹{{ stockData.price }}</span>
+               </div>
+               <div class="info-item">
+                 <span class="label">Change</span>
+                 <span class="value" [class.positive]="stockData.isPositive" [class.negative]="!stockData.isPositive">
+                   {{ stockData.change }}%
+                 </span>
+               </div>
+               <div class="info-item">
+                 <span class="label">Volume</span>
+                 <span class="value">{{ stockData.volume }}</span>
+               </div>
+             </div>
           </div>
           <div *ngIf="searchError" class="error-msg mt-4">{{ searchError }}</div>
         </div>
@@ -301,6 +310,29 @@ import { ChartConfiguration, ChartType } from 'chart.js';
         }
       }
 
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $space-4;
+        
+        .info-item {
+          display: flex;
+          flex-direction: column;
+          gap: $space-1;
+          
+          .label {
+            font-size: $text-xs;
+            color: $text-secondary;
+            text-transform: uppercase;
+          }
+          
+          .value {
+            font-size: $text-lg;
+            font-weight: $font-bold;
+          }
+        }
+      }
+
       .error-msg {
         color: $stock-red;
         font-size: $text-sm;
@@ -315,18 +347,7 @@ export class ToolsComponent {
   searchSymbol = '';
   loadingSearch = signal(false);
   searchError = '';
-  chartData?: ChartConfiguration['data'];
-  chartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: true }
-    },
-    scales: {
-      y: { beginAtZero: false }
-    }
-  };
-  chartType: ChartType = 'line';
+  stockData: any = null;
 
   // SIP Calculator
   sipMonthly = 10000;
@@ -352,25 +373,18 @@ export class ToolsComponent {
     if (!this.searchSymbol) return;
     this.loadingSearch.set(true);
     this.searchError = '';
+    this.stockData = null;
     
-    this.http.get<any>(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${this.searchSymbol}&apikey=${this.apiKey}`)
+    this.http.get<any>(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${this.searchSymbol}&apikey=${this.apiKey}`)
       .subscribe({
         next: (data) => {
-          const timeSeries = data['Time Series (Daily)'];
-          if (timeSeries) {
-            const labels = Object.keys(timeSeries).reverse().slice(-30); // Last 30 days
-            const prices = labels.map(date => parseFloat(timeSeries[date]['4. close']));
-            
-            this.chartData = {
-              labels: labels,
-              datasets: [{
-                data: prices,
-                label: this.searchSymbol,
-                borderColor: '#00BFA6',
-                backgroundColor: 'rgba(0, 191, 166, 0.1)',
-                fill: true,
-                tension: 0.4
-              }]
+          const quote = data['Global Quote'];
+          if (quote && quote['05. price']) {
+            this.stockData = {
+              price: parseFloat(quote['05. price']).toFixed(2),
+              change: quote['10. change percent'].replace('%', ''),
+              isPositive: !quote['10. change percent'].startsWith('-'),
+              volume: quote['06. volume']
             };
             this.loadingSearch.set(false);
           } else {
@@ -393,7 +407,6 @@ export class ToolsComponent {
       return;
     }
 
-    // Default to 12% if not provided
     const rate = this.sipReturn || 12;
     const monthlyRate = rate / 12 / 100;
     const months = this.sipYears * 12;
